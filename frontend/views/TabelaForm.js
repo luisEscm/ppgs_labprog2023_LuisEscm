@@ -1,28 +1,33 @@
 import React from 'react';
 import {useState} from 'react';
+import {useEffect} from 'react';
+
+
+
 
 export default function TabelaForm({categorias, tabela, client}) {
     const [paginaAtual, setPagAtual] = useState(1)
-    const [botoesVisi, setBotoesVisi] = useState([1,2,3])
+    const [botoesVisi, setBotoesVisi] = useState([])
 
     
     const botoes =  botoesVisi.map((i, key) => {
+        
         if(i === paginaAtual){
-            return <li className="page-item active"><a href="#/producoes" className="page-link">{ i }</a></li>
+            return <li className="page-item active"><a href="#/producoes" className="page-link" onClick= {() => controles.goTo(i)}>{ i }</a></li>
         }else{
-            return <li className="page-item"><a href="#/producoes" className="page-link">{ i }</a></li>
+            return <li className="page-item"><a href="#/producoes" className="page-link" onClick= {() => controles.goTo(i)}>{ i }</a></li>
         }
     });
     
-    const quantPagina = 3
+    const quantPagina = 5
     const estado = {
         quantPagina,
         maxBotoesVisiveis: 5,
         totalPagina: Math.ceil(tabela.length / quantPagina)
     }
 
-    function atualizarBotoes(){
-        const {maxL, maxR} = calcularMaxED()
+    function atualizarBotoes(erro){
+        const {maxL, maxR} = calcularMaxED(erro)
         let lista = []
 
         for(let page = maxL; page <= maxR; page++ ){
@@ -31,14 +36,14 @@ export default function TabelaForm({categorias, tabela, client}) {
         setBotoesVisi(lista)
     }
 
-    function calcularMaxED(){
+    function calcularMaxED(erro){
         const { maxBotoesVisiveis } = estado
-        let maxL = (paginaAtual - Math.floor(maxBotoesVisiveis / 2))
-        let maxR = (paginaAtual + Math.floor(maxBotoesVisiveis / 2))
-        console.log(`1MaxEsquerda: ${maxL}`)
-        console.log(`1MaxDireita: ${maxR}`)
+        let maxL = ((paginaAtual + erro) - Math.floor(maxBotoesVisiveis / 2))
+        let maxR = ((paginaAtual + erro) + Math.floor(maxBotoesVisiveis / 2))
         if (maxL < 1) {
             maxL = 1
+            maxR = (maxL + (maxBotoesVisiveis - 1))
+            if (maxR > estado.totalPagina) maxR = (estado.totalPagina)
         }
 
         if (maxR > estado.totalPagina) {
@@ -48,31 +53,34 @@ export default function TabelaForm({categorias, tabela, client}) {
             if(maxL < 1) maxL = 1
         }
 
-        console.log(`2MaxEsquerda: ${maxL}`)
-        console.log(`2MaxDireita: ${maxR}`)
-
         return {maxL, maxR}
     }
 
-    const controles = {
-        next(){
-            const pagina = paginaAtual + 1
+    useEffect( () => {
+        atualizarBotoes(0);
+        }, []
+    )
 
-            if(pagina <= estado.totalPagina){
-                setPagAtual(pagina)
-                console.log(paginaAtual)
-                atualizarBotoes()
+    let controles = {
+        next(){
+            let pagina = (paginaAtual + 1)
+
+            if(pagina > estado.totalPagina){
+                pagina--
             }
 
+            setPagAtual(pagina)
+            atualizarBotoes(1)
         },
         prev(){
-            const pagina = paginaAtual - 1
+            let pagina = (paginaAtual - 1)
 
-            if(pagina >= 1){
-                setPagAtual(pagina)
-                console.log(paginaAtual)
-                atualizarBotoes()
+            if(pagina < 1){
+                pagina = 1
             }
+
+            setPagAtual(pagina)
+            atualizarBotoes((-1))
 
         },
         goTo(pag){
@@ -85,7 +93,7 @@ export default function TabelaForm({categorias, tabela, client}) {
             }
 
             setPagAtual(pag)
-            atualizarBotoes()
+            atualizarBotoes((pag - paginaAtual))
         }
     }
 
