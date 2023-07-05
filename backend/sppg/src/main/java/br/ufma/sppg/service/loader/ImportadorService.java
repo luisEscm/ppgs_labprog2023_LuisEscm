@@ -3,6 +3,7 @@ package br.ufma.sppg.service.loader;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,16 +48,17 @@ public class ImportadorService {
             try {
                 Docente ref = importarDocente(defFolder + f.getName());
                 //apenas para ver onde está, comentar
-                System.out.println("Executando: " + ref.getNome());
+                //System.out.println("Executando: " + ref.getNome());
                 //procura pela mesmo docente na base
-                Docente base = repoDoc.findByNome(ref.getNome());                
-                if (base == null)                     
-                    base = Docente.builder()
-                                .lattes(ref.getLattes())
-                                .nome(ref.getNome())
-                                .dataAtualizacao(ref.getDataAtualizacao())
-                                .build();
-
+                Optional<Docente> baseOptional = repoDoc.findByNome(ref.getNome());                
+                Docente base = Docente.builder()
+                            .lattes(ref.getLattes())
+                            .nome(ref.getNome())
+                            .dataAtualizacao(ref.getDataAtualizacao())
+                            .build();
+                if (baseOptional.isPresent())
+                    base = baseOptional.get();
+                
                 syncProducao(ref.getProducoes(), base);
                 syncTecnica(ref.getTecnicas(), base);
                 syncOrientacao(ref.getOrientacoes(), base);

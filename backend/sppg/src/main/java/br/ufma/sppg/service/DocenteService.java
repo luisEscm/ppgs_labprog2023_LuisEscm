@@ -114,7 +114,7 @@ public class DocenteService {
     public List<Docente> obterDocentesNome(String nome){
         verificarPalavra(nome, "Nome inválido");
 
-        return repository.findByNome(nome);
+        return repository.findAllByNome(nome);
     }
 
     private void verificarPalavra(String nome, String mensagem){

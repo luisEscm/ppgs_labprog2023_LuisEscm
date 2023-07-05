@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import br.ufma.sppg.dto.IndicadoresDTO;
 import br.ufma.sppg.dto.Indice;
+import br.ufma.sppg.dto.InfoGraficoDTO;
 import br.ufma.sppg.model.Docente;
 import br.ufma.sppg.model.Orientacao;
 import br.ufma.sppg.model.Producao;
@@ -230,6 +234,119 @@ public class ProgramaService {
         return idOrientacoes.size();
     }
 
+    // obtem os indiadores do programa escolhido dentro do limite de tempo escolhido
+    public IndicadoresDTO obterIndicadores(Integer idPPG, Integer anoIni, Integer anoFin){
+        verificarId(idPPG);
+        verificarData(anoIni, anoFin);
+        List<Docente> docentes = repository.obterDocentes(idPPG);
+        Double iRestrito = 0.0;
+        Double iNRestrito = 0.0;
+        Double iGeral = 0.0;
+        List<Producao> producoes = new ArrayList<>();
+        ArrayList<Integer> indicesProd = new ArrayList<>();
+
+        for (Docente docente : docentes) {
+
+            producoes = docente.getProducoes();
+
+            for (Producao producao : producoes) {
+
+                if (producao.getAno() >= anoIni && producao.getAno() <= anoFin
+                        && !indicesProd.contains(producao.getId())) {
+
+                    indicesProd.add(producao.getId());
+                    switch (producao.getQualis()) {
+                        case "A1":
+                            iRestrito += 1.0f;
+                            break;
+
+                        case "A2":
+                            iRestrito += 0.85;
+                            break;
+
+                        case "A3":
+                            iRestrito += 0.725;
+                            break;
+
+                        case "A4":
+                            iRestrito += 0.625;
+                            break;
+
+                        case "B1":
+                            iNRestrito += 0.5;
+                            break;
+
+                        case "B2":
+                            iNRestrito += 0.25;
+                            break;
+
+                        case "B3":
+                            iNRestrito += 0.1;
+                            break;
+
+                        case "B4":
+                            iNRestrito += 0.05;
+                            break;
+
+                        default:
+                            throw new ServicoRuntimeException("Uma das produções possui o Qualis inválido");
+                    }
+                }
+            }
+        }
+        iGeral = iRestrito + iNRestrito;
+
+        return new IndicadoresDTO("" + iGeral, "" + iRestrito, "" + iNRestrito, "" + indicesProd.size());
+    }
+
+    public IndicadoresDTO teste(){
+        return new IndicadoresDTO("1", "2", "3", "4");
+    }
+
+    public InfoGraficoDTO obterGrafico(Integer idPrograma, Integer anoIni, Integer anoFin){
+        List<Integer> anos = new ArrayList<>();
+        List<Integer> a1s = new ArrayList<>();
+        List<Integer> a2s = new ArrayList<>();
+        List<Integer> a3s = new ArrayList<>();
+        List<Integer> a4s = new ArrayList<>();
+        Integer i = anoIni;
+        while(i <= anoFin){
+            anos.add(i);
+            i += 1;
+        }
+        if(idPrograma == 1){
+            for (Integer j : anos) {
+                if((j % 2) == 0){
+                    a1s.add(3);
+                    a2s.add(17);
+                    a3s.add(21);
+                    a4s.add(1);
+                }else{
+                    a1s.add(17);
+                    a2s.add(1);
+                    a3s.add(3);
+                    a4s.add(21);
+                }
+            }
+            return new InfoGraficoDTO(anos, a1s, a2s, a3s, a4s);
+        }else{
+            for (Integer j : anos) {
+                if((j % 2) == 0){
+                    a1s.add(2);
+                    a2s.add(32);
+                    a3s.add(25);
+                    a4s.add(8);
+                }else{
+                    a1s.add(8);
+                    a2s.add(2);
+                    a3s.add(32);
+                    a4s.add(25);
+                }
+            }
+            return new InfoGraficoDTO(anos, a1s, a2s, a3s, a4s);
+        }
+    }
+
     private void verificarNome(String nome) {
         if (nome == null) {
             throw new ServicoRuntimeException("Nome do Programa inválido");
@@ -262,3 +379,12 @@ public class ProgramaService {
     }
 
 }
+
+/*
+ * spring.datasource.url=jdbc:postgresql://horton.db.elephantsql.com:5432/hckvzauf
+spring.datasource.driverClassName=org.postgresql.Driver
+spring.datasource.username=hckvzauf
+spring.datasource.password=Q44izx1iP5Q4pW4dv5UGBU1lIQpKYtrE
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.defer-datasource-initialization=true
+ */
