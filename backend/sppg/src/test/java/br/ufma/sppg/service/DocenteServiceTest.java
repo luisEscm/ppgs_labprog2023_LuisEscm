@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.ufma.sppg.dto.Indice;
+import br.ufma.sppg.dto.ProducaoDTO;
+import br.ufma.sppg.dto.QualisDTO;
 import br.ufma.sppg.model.*;
 import br.ufma.sppg.repo.*;
 import br.ufma.sppg.service.exceptions.ServicoRuntimeException;
@@ -902,8 +904,8 @@ public class DocenteServiceTest {
 
     @Test
     public void deveObterOrientacoesPeloIdDocenteEIntervaloDeTempo(){
-        oriRepository.deleteAll();
-        docRepository.deleteAll();
+        // oriRepository.deleteAll();
+        // docRepository.deleteAll();
         //Cenário
         Docente docente1 = Docente.builder().nome("docente1")
                                             .dataAtualizacao(new Date())
@@ -976,8 +978,8 @@ public class DocenteServiceTest {
 
     @Test
     public void deveGerarErroIdNullObterOrientacoesPeloIdDocenteEIntervaloDeTempo(){
-        oriRepository.deleteAll();
-        docRepository.deleteAll();
+        // oriRepository.deleteAll();
+        // docRepository.deleteAll();
         //Cenário
         Docente docente1 = Docente.builder().nome("docente1")
                                             .dataAtualizacao(new Date())
@@ -1046,8 +1048,8 @@ public class DocenteServiceTest {
 
     @Test
     public void deveGerarErroIdNaoExisteObterOrientacoesPeloIdDocenteEIntervaloDeTempo(){
-        oriRepository.deleteAll();
-        docRepository.deleteAll();
+        // oriRepository.deleteAll();
+        // docRepository.deleteAll();
         //Cenário
         Docente docente1 = Docente.builder().nome("docente1")
                                             .dataAtualizacao(new Date())
@@ -1116,8 +1118,8 @@ public class DocenteServiceTest {
 
     @Test
     public void deveGerarErroDataInicialNullObterOrientacoesPeloIdDocenteEIntervaloDeTempo(){
-        oriRepository.deleteAll();
-        docRepository.deleteAll();
+        // oriRepository.deleteAll();
+        // docRepository.deleteAll();
         //Cenário
         Docente docente1 = Docente.builder().nome("docente1")
                                             .dataAtualizacao(new Date())
@@ -1186,8 +1188,8 @@ public class DocenteServiceTest {
 
     @Test
     public void deveGerarErroDataFinalNullObterOrientacoesPeloIdDocenteEIntervaloDeTempo(){
-        oriRepository.deleteAll();
-        docRepository.deleteAll();
+        // oriRepository.deleteAll();
+        // docRepository.deleteAll();
         //Cenário
         Docente docente1 = Docente.builder().nome("docente1")
                                             .dataAtualizacao(new Date())
@@ -1256,8 +1258,8 @@ public class DocenteServiceTest {
 
     @Test
     public void deveGerarErroDataInicialMaiorQueaFinalObterOrientacoesPeloIdDocenteEIntervaloDeTempo(){
-        oriRepository.deleteAll();
-        docRepository.deleteAll();
+        // oriRepository.deleteAll();
+        // docRepository.deleteAll();
         //Cenário
         Docente docente1 = Docente.builder().nome("docente1")
                                             .dataAtualizacao(new Date())
@@ -2191,5 +2193,32 @@ public class DocenteServiceTest {
         Assertions.assertThrows(ServicoRuntimeException.class,
         () -> service.obterDocentesNome(""),
         "Nome inválido");
+    }
+
+    @Test
+    public void deveObterProducoesDTO(){
+        List<ProducaoDTO> prodDTO = service.obterProducoesNoDate(3);
+
+        Assertions.assertEquals(2,prodDTO.size());
+        Assertions.assertEquals("Sim", prodDTO.get(0).getOrientacao());
+        Assertions.assertEquals("1G|2M|3D", prodDTO.get(0).getGmd());
+        Assertions.assertEquals("Não", prodDTO.get(1).getOrientacao());
+        Assertions.assertEquals("2G|2M|5D", prodDTO.get(1).getGmd());
+    }
+
+    @Test
+    public void deveObterQualisDTO(){
+        //QualisDTO qualis = docRepository.obterIndicadores(1, 2019, 2023).get();
+
+        //Assertions.assertNotNull(qualis);
+       // Assertions.assertEquals(3,qualis.getA1());
+    }
+
+        @Test
+    public void deveObterQTDProducoes(){
+        Integer qualis = docRepository.obterQtdQualis(6, 2019, 2023, "A1").get();
+
+        Assertions.assertNotNull(qualis);
+        Assertions.assertEquals(2,qualis);
     }
 }

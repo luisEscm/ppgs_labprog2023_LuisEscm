@@ -43,7 +43,7 @@ public class DocenteTest {
 
         repo.save(docente);
 
-        Docente queryResult = repo.findByNome("John Doe");        
+        Docente queryResult = repo.findByNome("John Doe").get();        
         Assertions.assertNotNull(queryResult);
     }
 
@@ -60,15 +60,17 @@ public class DocenteTest {
         Docente docSalvo = repo.save(novoDocente);
 
         //ação
-        List<Programa> programas = new ArrayList<Programa>();
-        programas.add(progSalvo);
-        docSalvo.setProgramas(programas); // adicionar lista de programas em Docente
+        List<Docente> programas = new ArrayList<Docente>();
+        programas.add(docSalvo);
+        progSalvo.setDocentes(programas); // adicionar lista de programas em Docente
 
-        Docente docSalvo2 = repo.save(docSalvo);
+        Programa docSalvo3 = prog.save(progSalvo);
+
+        Docente docSalvo2 = repo.findById(docSalvo.getId()).get();
 
         Assertions.assertNotNull(docSalvo2);
         // Tamanho esperado //valor
-        Assertions.assertEquals(docSalvo2.getProgramas().size(), 1);
+        Assertions.assertEquals(1, docSalvo2.getProgramas().size());
     }
 
     @Test
@@ -110,7 +112,7 @@ public class DocenteTest {
     public void deveSalvarDocenteComProducao() throws ParseException {
         // Cenario
         Docente novoDocente = criaDocente();
-        Producao novaProd = Producao.builder().titulo("Desenvolvimento de sistemas").build();
+        Producao novaProd = Producao.builder().tipo("Test").qualis("test").ano(2001).titulo("Desenvolvimento de sistemas").build();
 
         Docente docenteSalvo = repo.save(novoDocente);
         Producao prodSalva = prodRepository.save(novaProd);
@@ -179,7 +181,7 @@ public class DocenteTest {
         Docente docenteSalvoComTecnica = repo.save(docenteSalvoSemTecnica);
 
         // Producao
-        Producao novaProd = Producao.builder().titulo("Desenvolvimento de sistemas").tipo("P").build();
+        Producao novaProd = Producao.builder().titulo("Desenvolvimento de sistemas").ano(2001).qualis("A23").tipo("P").build();
         Producao prodSalva = prodRepository.save(novaProd);
         List<Producao> prods = new ArrayList<Producao>();
         prods.add(prodSalva);

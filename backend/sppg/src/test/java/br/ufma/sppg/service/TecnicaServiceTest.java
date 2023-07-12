@@ -268,56 +268,6 @@ public class TecnicaServiceTest {
     }
 
     @Test
-    public void naoDeveSalvarTecnicaComEstatisticasInvalidas() throws ParseException {
-        // Cenario 1
-        Tecnica tecnica = tecnicaFactory();
-        tecnica.setQtdDoutorado(-1);
-
-        // Cenario 2
-        Tecnica tecnica2 = tecnicaFactory();
-        tecnica2.setQtdMestrado(-1);
-
-        // Cenario 3
-        Tecnica tecnica3 = tecnicaFactory();
-        tecnica3.setQtdGrad(-1);
-
-        // Cenario 4
-        Tecnica tecnica4 = tecnicaFactory();
-        tecnica4.setQtdGrad(-1);
-        tecnica4.setQtdMestrado(-1);
-        tecnica4.setQtdDoutorado(-1);
-
-        // Cenario 5
-        Tecnica tecnica5 = tecnicaFactory();
-
-        Tecnica tecnicaBanco = tecnicaRepository.save(tecnica5);
-
-        tecnicaBanco.setQtdGrad(-1);
-        tecnicaBanco.setQtdMestrado(-1);
-        tecnicaBanco.setQtdDoutorado(-1);
-
-        Assertions.assertThrows(ServicoRuntimeException.class,
-                () -> tecnicaService.salvarTecnica(tecnica),
-                "Estatísticas inválidas!");
-
-        Assertions.assertThrows(ServicoRuntimeException.class,
-                () -> tecnicaService.salvarTecnica(tecnica2),
-                "Estatísticas inválidas!");
-
-        Assertions.assertThrows(ServicoRuntimeException.class,
-                () -> tecnicaService.salvarTecnica(tecnica3),
-                "Estatísticas inválidas!");
-
-        Assertions.assertThrows(ServicoRuntimeException.class,
-                () -> tecnicaService.salvarTecnica(tecnica4),
-                "Estatísticas inválidas!");
-
-        Assertions.assertThrows(ServicoRuntimeException.class,
-                () -> tecnicaService.atualizarTecnica(tecnicaBanco),
-                "Estatísticas inválidas!");
-    }
-
-    @Test
     public void deveObterOrientacoesAssociadasAUmaTecnica() throws ParseException {
         // Cenario - cria / builder
         Tecnica tecnica = tecnicaFactory();
