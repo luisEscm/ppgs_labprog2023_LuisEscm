@@ -11,11 +11,11 @@ public class SppgApplication implements WebMvcConfigurer {
 	@Override
   	public void addCorsMappings(CorsRegistry cors) {
     	cors.addMapping("/**")
-        	.allowedMethods("GET");
+        	.allowedMethods("GET", "PUT", "POST");
   	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(SppgApplication.class, args);	
+		SpringApplication.run(SppgApplication.class, args);
 	}
 
 }

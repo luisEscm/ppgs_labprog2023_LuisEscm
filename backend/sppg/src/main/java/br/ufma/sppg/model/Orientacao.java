@@ -63,8 +63,7 @@ public class Orientacao {
     Docente orientador;
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "producao_orientacao", joinColumns = @JoinColumn(name = "id_orientacao"), inverseJoinColumns = @JoinColumn(name = "id_producao"))
+    @ManyToMany(mappedBy="orientacoes")
     List<Producao> producoes;
 
     @JsonIgnore

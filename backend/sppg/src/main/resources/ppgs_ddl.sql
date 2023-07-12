@@ -1,5 +1,5 @@
 --
--- PostgreSQL database dump
+-- jkmmzljtQL database dump
 --
 
 -- Dumped from database version 14.0
@@ -24,7 +24,7 @@ SET default_table_access_method = heap;
 
 --
 -- TOC entry 212 (class 1259 OID 60756)
--- Name: docente; Type: TABLE; Schema: public; Owner: postgres
+-- Name: docente; Type: TABLE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE TABLE public.docente (
@@ -35,11 +35,11 @@ CREATE TABLE public.docente (
 );
 
 
-ALTER TABLE public.docente OWNER TO postgres;
+ALTER TABLE public.docente OWNER TO jkmmzljt;
 
 --
 -- TOC entry 211 (class 1259 OID 60755)
--- Name: docente_id_docente_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: docente_id_docente_seq; Type: SEQUENCE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE SEQUENCE public.docente_id_docente_seq
@@ -51,12 +51,12 @@ CREATE SEQUENCE public.docente_id_docente_seq
     CACHE 1;
 
 
-ALTER TABLE public.docente_id_docente_seq OWNER TO postgres;
+ALTER TABLE public.docente_id_docente_seq OWNER TO jkmmzljt;
 
 --
 -- TOC entry 3651 (class 0 OID 0)
 -- Dependencies: 211
--- Name: docente_id_docente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: docente_id_docente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jkmmzljt
 --
 
 ALTER SEQUENCE public.docente_id_docente_seq OWNED BY public.docente.id_docente;
@@ -64,7 +64,7 @@ ALTER SEQUENCE public.docente_id_docente_seq OWNED BY public.docente.id_docente;
 
 --
 -- TOC entry 222 (class 1259 OID 60855)
--- Name: docente_producao; Type: TABLE; Schema: public; Owner: postgres
+-- Name: docente_producao; Type: TABLE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE TABLE public.docente_producao (
@@ -73,11 +73,11 @@ CREATE TABLE public.docente_producao (
 );
 
 
-ALTER TABLE public.docente_producao OWNER TO postgres;
+ALTER TABLE public.docente_producao OWNER TO jkmmzljt;
 
 --
 -- TOC entry 223 (class 1259 OID 60870)
--- Name: docente_tecnica; Type: TABLE; Schema: public; Owner: postgres
+-- Name: docente_tecnica; Type: TABLE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE TABLE public.docente_tecnica (
@@ -86,11 +86,11 @@ CREATE TABLE public.docente_tecnica (
 );
 
 
-ALTER TABLE public.docente_tecnica OWNER TO postgres;
+ALTER TABLE public.docente_tecnica OWNER TO jkmmzljt;
 
 --
 -- TOC entry 219 (class 1259 OID 60812)
--- Name: orientacao; Type: TABLE; Schema: public; Owner: postgres
+-- Name: orientacao; Type: TABLE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE TABLE public.orientacao (
@@ -107,11 +107,11 @@ CREATE TABLE public.orientacao (
 );
 
 
-ALTER TABLE public.orientacao OWNER TO postgres;
+ALTER TABLE public.orientacao OWNER TO jkmmzljt;
 
 --
 -- TOC entry 218 (class 1259 OID 60811)
--- Name: orientacao_id_orientacao_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: orientacao_id_orientacao_seq; Type: SEQUENCE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE SEQUENCE public.orientacao_id_orientacao_seq
@@ -123,12 +123,12 @@ CREATE SEQUENCE public.orientacao_id_orientacao_seq
     CACHE 1;
 
 
-ALTER TABLE public.orientacao_id_orientacao_seq OWNER TO postgres;
+ALTER TABLE public.orientacao_id_orientacao_seq OWNER TO jkmmzljt;
 
 --
 -- TOC entry 3652 (class 0 OID 0)
 -- Dependencies: 218
--- Name: orientacao_id_orientacao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: orientacao_id_orientacao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jkmmzljt
 --
 
 ALTER SEQUENCE public.orientacao_id_orientacao_seq OWNED BY public.orientacao.id_orientacao;
@@ -136,7 +136,7 @@ ALTER SEQUENCE public.orientacao_id_orientacao_seq OWNED BY public.orientacao.id
 
 --
 -- TOC entry 215 (class 1259 OID 60784)
--- Name: producao; Type: TABLE; Schema: public; Owner: postgres
+-- Name: producao; Type: TABLE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE TABLE public.producao (
@@ -154,12 +154,12 @@ CREATE TABLE public.producao (
 );
 
 
-ALTER TABLE public.producao OWNER TO postgres;
+ALTER TABLE public.producao OWNER TO jkmmzljt;
 
 --
 -- TOC entry 3653 (class 0 OID 0)
 -- Dependencies: 215
--- Name: COLUMN producao.tipo; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: COLUMN producao.tipo; Type: COMMENT; Schema: public; Owner: jkmmzljt
 --
 
 COMMENT ON COLUMN public.producao.tipo IS 'P para periódico e C para congresso';
@@ -168,7 +168,7 @@ COMMENT ON COLUMN public.producao.tipo IS 'P para periódico e C para congresso'
 --
 -- TOC entry 3654 (class 0 OID 0)
 -- Dependencies: 215
--- Name: COLUMN producao.issn_ou_sigla; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: COLUMN producao.issn_ou_sigla; Type: COMMENT; Schema: public; Owner: jkmmzljt
 --
 
 COMMENT ON COLUMN public.producao.issn_ou_sigla IS 'ISSN quando tipo=''P'', SIGLA quando tipo=''C''';
@@ -177,7 +177,7 @@ COMMENT ON COLUMN public.producao.issn_ou_sigla IS 'ISSN quando tipo=''P'', SIGL
 --
 -- TOC entry 3655 (class 0 OID 0)
 -- Dependencies: 215
--- Name: COLUMN producao.nome_local; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: COLUMN producao.nome_local; Type: COMMENT; Schema: public; Owner: jkmmzljt
 --
 
 COMMENT ON COLUMN public.producao.nome_local IS 'Local de publicação';
@@ -186,7 +186,7 @@ COMMENT ON COLUMN public.producao.nome_local IS 'Local de publicação';
 --
 -- TOC entry 3656 (class 0 OID 0)
 -- Dependencies: 215
--- Name: COLUMN producao.titulo; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: COLUMN producao.titulo; Type: COMMENT; Schema: public; Owner: jkmmzljt
 --
 
 COMMENT ON COLUMN public.producao.titulo IS 'Titulo do artigo';
@@ -195,7 +195,7 @@ COMMENT ON COLUMN public.producao.titulo IS 'Titulo do artigo';
 --
 -- TOC entry 3657 (class 0 OID 0)
 -- Dependencies: 215
--- Name: COLUMN producao.qualis; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: COLUMN producao.qualis; Type: COMMENT; Schema: public; Owner: jkmmzljt
 --
 
 COMMENT ON COLUMN public.producao.qualis IS 'Classificação da CAPES';
@@ -204,7 +204,7 @@ COMMENT ON COLUMN public.producao.qualis IS 'Classificação da CAPES';
 --
 -- TOC entry 3658 (class 0 OID 0)
 -- Dependencies: 215
--- Name: COLUMN producao.percentile_ou_h5; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: COLUMN producao.percentile_ou_h5; Type: COMMENT; Schema: public; Owner: jkmmzljt
 --
 
 COMMENT ON COLUMN public.producao.percentile_ou_h5 IS 'percentile quanto tipo=''P'', h5 quando tipo=''C''';
@@ -212,7 +212,7 @@ COMMENT ON COLUMN public.producao.percentile_ou_h5 IS 'percentile quanto tipo=''
 
 --
 -- TOC entry 214 (class 1259 OID 60783)
--- Name: producao_id_producao_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: producao_id_producao_seq; Type: SEQUENCE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE SEQUENCE public.producao_id_producao_seq
@@ -224,12 +224,12 @@ CREATE SEQUENCE public.producao_id_producao_seq
     CACHE 1;
 
 
-ALTER TABLE public.producao_id_producao_seq OWNER TO postgres;
+ALTER TABLE public.producao_id_producao_seq OWNER TO jkmmzljt;
 
 --
 -- TOC entry 3659 (class 0 OID 0)
 -- Dependencies: 214
--- Name: producao_id_producao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: producao_id_producao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jkmmzljt
 --
 
 ALTER SEQUENCE public.producao_id_producao_seq OWNED BY public.producao.id_producao;
@@ -237,7 +237,7 @@ ALTER SEQUENCE public.producao_id_producao_seq OWNED BY public.producao.id_produ
 
 --
 -- TOC entry 220 (class 1259 OID 60825)
--- Name: producao_orientacao; Type: TABLE; Schema: public; Owner: postgres
+-- Name: producao_orientacao; Type: TABLE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE TABLE public.producao_orientacao (
@@ -246,11 +246,11 @@ CREATE TABLE public.producao_orientacao (
 );
 
 
-ALTER TABLE public.producao_orientacao OWNER TO postgres;
+ALTER TABLE public.producao_orientacao OWNER TO jkmmzljt;
 
 --
 -- TOC entry 210 (class 1259 OID 60747)
--- Name: programa; Type: TABLE; Schema: public; Owner: postgres
+-- Name: programa; Type: TABLE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE TABLE public.programa (
@@ -259,11 +259,11 @@ CREATE TABLE public.programa (
 );
 
 
-ALTER TABLE public.programa OWNER TO postgres;
+ALTER TABLE public.programa OWNER TO jkmmzljt;
 
 --
 -- TOC entry 213 (class 1259 OID 60765)
--- Name: programa_docente; Type: TABLE; Schema: public; Owner: postgres
+-- Name: programa_docente; Type: TABLE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE TABLE public.programa_docente (
@@ -272,11 +272,11 @@ CREATE TABLE public.programa_docente (
 );
 
 
-ALTER TABLE public.programa_docente OWNER TO postgres;
+ALTER TABLE public.programa_docente OWNER TO jkmmzljt;
 
 --
 -- TOC entry 209 (class 1259 OID 60746)
--- Name: programa_id_programa_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: programa_id_programa_seq; Type: SEQUENCE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE SEQUENCE public.programa_id_programa_seq
@@ -288,12 +288,12 @@ CREATE SEQUENCE public.programa_id_programa_seq
     CACHE 1;
 
 
-ALTER TABLE public.programa_id_programa_seq OWNER TO postgres;
+ALTER TABLE public.programa_id_programa_seq OWNER TO jkmmzljt;
 
 --
 -- TOC entry 3660 (class 0 OID 0)
 -- Dependencies: 209
--- Name: programa_id_programa_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: programa_id_programa_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jkmmzljt
 --
 
 ALTER SEQUENCE public.programa_id_programa_seq OWNED BY public.programa.id_programa;
@@ -301,7 +301,7 @@ ALTER SEQUENCE public.programa_id_programa_seq OWNED BY public.programa.id_progr
 
 --
 -- TOC entry 217 (class 1259 OID 60798)
--- Name: tecnica; Type: TABLE; Schema: public; Owner: postgres
+-- Name: tecnica; Type: TABLE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE TABLE public.tecnica (
@@ -317,11 +317,11 @@ CREATE TABLE public.tecnica (
 );
 
 
-ALTER TABLE public.tecnica OWNER TO postgres;
+ALTER TABLE public.tecnica OWNER TO jkmmzljt;
 
 --
 -- TOC entry 216 (class 1259 OID 60797)
--- Name: tecnica_id_tecnica_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: tecnica_id_tecnica_seq; Type: SEQUENCE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE SEQUENCE public.tecnica_id_tecnica_seq
@@ -333,12 +333,12 @@ CREATE SEQUENCE public.tecnica_id_tecnica_seq
     CACHE 1;
 
 
-ALTER TABLE public.tecnica_id_tecnica_seq OWNER TO postgres;
+ALTER TABLE public.tecnica_id_tecnica_seq OWNER TO jkmmzljt;
 
 --
 -- TOC entry 3661 (class 0 OID 0)
 -- Dependencies: 216
--- Name: tecnica_id_tecnica_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: tecnica_id_tecnica_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jkmmzljt
 --
 
 ALTER SEQUENCE public.tecnica_id_tecnica_seq OWNED BY public.tecnica.id_tecnica;
@@ -346,7 +346,7 @@ ALTER SEQUENCE public.tecnica_id_tecnica_seq OWNED BY public.tecnica.id_tecnica;
 
 --
 -- TOC entry 221 (class 1259 OID 60840)
--- Name: tecnica_orientacao; Type: TABLE; Schema: public; Owner: postgres
+-- Name: tecnica_orientacao; Type: TABLE; Schema: public; Owner: jkmmzljt
 --
 
 CREATE TABLE public.tecnica_orientacao (
@@ -355,11 +355,11 @@ CREATE TABLE public.tecnica_orientacao (
 );
 
 
-ALTER TABLE public.tecnica_orientacao OWNER TO postgres;
+ALTER TABLE public.tecnica_orientacao OWNER TO jkmmzljt;
 
 --
 -- TOC entry 3472 (class 2604 OID 60759)
--- Name: docente id_docente; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: docente id_docente; Type: DEFAULT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.docente ALTER COLUMN id_docente SET DEFAULT nextval('public.docente_id_docente_seq'::regclass);
@@ -367,7 +367,7 @@ ALTER TABLE ONLY public.docente ALTER COLUMN id_docente SET DEFAULT nextval('pub
 
 --
 -- TOC entry 3475 (class 2604 OID 60815)
--- Name: orientacao id_orientacao; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: orientacao id_orientacao; Type: DEFAULT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.orientacao ALTER COLUMN id_orientacao SET DEFAULT nextval('public.orientacao_id_orientacao_seq'::regclass);
@@ -375,7 +375,7 @@ ALTER TABLE ONLY public.orientacao ALTER COLUMN id_orientacao SET DEFAULT nextva
 
 --
 -- TOC entry 3473 (class 2604 OID 60787)
--- Name: producao id_producao; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: producao id_producao; Type: DEFAULT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.producao ALTER COLUMN id_producao SET DEFAULT nextval('public.producao_id_producao_seq'::regclass);
@@ -383,7 +383,7 @@ ALTER TABLE ONLY public.producao ALTER COLUMN id_producao SET DEFAULT nextval('p
 
 --
 -- TOC entry 3471 (class 2604 OID 60750)
--- Name: programa id_programa; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: programa id_programa; Type: DEFAULT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.programa ALTER COLUMN id_programa SET DEFAULT nextval('public.programa_id_programa_seq'::regclass);
@@ -391,7 +391,7 @@ ALTER TABLE ONLY public.programa ALTER COLUMN id_programa SET DEFAULT nextval('p
 
 --
 -- TOC entry 3474 (class 2604 OID 60801)
--- Name: tecnica id_tecnica; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: tecnica id_tecnica; Type: DEFAULT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.tecnica ALTER COLUMN id_tecnica SET DEFAULT nextval('public.tecnica_id_tecnica_seq'::regclass);
@@ -399,7 +399,7 @@ ALTER TABLE ONLY public.tecnica ALTER COLUMN id_tecnica SET DEFAULT nextval('pub
 
 --
 -- TOC entry 3479 (class 2606 OID 60763)
--- Name: docente docente_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: docente docente_pk; Type: CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.docente
@@ -408,7 +408,7 @@ ALTER TABLE ONLY public.docente
 
 --
 -- TOC entry 3493 (class 2606 OID 60859)
--- Name: docente_producao docente_producao_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: docente_producao docente_producao_pk; Type: CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.docente_producao
@@ -417,7 +417,7 @@ ALTER TABLE ONLY public.docente_producao
 
 --
 -- TOC entry 3495 (class 2606 OID 60874)
--- Name: docente_tecnica docente_tecnica_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: docente_tecnica docente_tecnica_pk; Type: CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.docente_tecnica
@@ -426,7 +426,7 @@ ALTER TABLE ONLY public.docente_tecnica
 
 --
 -- TOC entry 3487 (class 2606 OID 60819)
--- Name: orientacao orientacao_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: orientacao orientacao_pk; Type: CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.orientacao
@@ -435,7 +435,7 @@ ALTER TABLE ONLY public.orientacao
 
 --
 -- TOC entry 3489 (class 2606 OID 60829)
--- Name: producao_orientacao producao_orientacao_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: producao_orientacao producao_orientacao_pk; Type: CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.producao_orientacao
@@ -444,7 +444,7 @@ ALTER TABLE ONLY public.producao_orientacao
 
 --
 -- TOC entry 3483 (class 2606 OID 60791)
--- Name: producao producao_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: producao producao_pk; Type: CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.producao
@@ -453,7 +453,7 @@ ALTER TABLE ONLY public.producao
 
 --
 -- TOC entry 3481 (class 2606 OID 60782)
--- Name: programa_docente programa_docente_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: programa_docente programa_docente_pk; Type: CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.programa_docente
@@ -462,7 +462,7 @@ ALTER TABLE ONLY public.programa_docente
 
 --
 -- TOC entry 3477 (class 2606 OID 60754)
--- Name: programa programa_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: programa programa_pk; Type: CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.programa
@@ -471,7 +471,7 @@ ALTER TABLE ONLY public.programa
 
 --
 -- TOC entry 3491 (class 2606 OID 60844)
--- Name: tecnica_orientacao tecnica_orientacao_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tecnica_orientacao tecnica_orientacao_pk; Type: CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.tecnica_orientacao
@@ -480,7 +480,7 @@ ALTER TABLE ONLY public.tecnica_orientacao
 
 --
 -- TOC entry 3485 (class 2606 OID 60805)
--- Name: tecnica tecnica_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tecnica tecnica_pk; Type: CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.tecnica
@@ -489,7 +489,7 @@ ALTER TABLE ONLY public.tecnica
 
 --
 -- TOC entry 3503 (class 2606 OID 60860)
--- Name: docente_producao docente_producao_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: docente_producao docente_producao_fk; Type: FK CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.docente_producao
@@ -498,7 +498,7 @@ ALTER TABLE ONLY public.docente_producao
 
 --
 -- TOC entry 3504 (class 2606 OID 60865)
--- Name: docente_producao docente_producao_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: docente_producao docente_producao_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.docente_producao
@@ -507,7 +507,7 @@ ALTER TABLE ONLY public.docente_producao
 
 --
 -- TOC entry 3505 (class 2606 OID 60875)
--- Name: docente_tecnica docente_tecnica_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: docente_tecnica docente_tecnica_fk; Type: FK CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.docente_tecnica
@@ -516,7 +516,7 @@ ALTER TABLE ONLY public.docente_tecnica
 
 --
 -- TOC entry 3506 (class 2606 OID 60880)
--- Name: docente_tecnica docente_tecnica_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: docente_tecnica docente_tecnica_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.docente_tecnica
@@ -525,7 +525,7 @@ ALTER TABLE ONLY public.docente_tecnica
 
 --
 -- TOC entry 3498 (class 2606 OID 60820)
--- Name: orientacao orientacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: orientacao orientacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.orientacao
@@ -534,7 +534,7 @@ ALTER TABLE ONLY public.orientacao
 
 --
 -- TOC entry 3499 (class 2606 OID 60830)
--- Name: producao_orientacao producao_orientacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: producao_orientacao producao_orientacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.producao_orientacao
@@ -543,7 +543,7 @@ ALTER TABLE ONLY public.producao_orientacao
 
 --
 -- TOC entry 3500 (class 2606 OID 60835)
--- Name: producao_orientacao producao_orientacao_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: producao_orientacao producao_orientacao_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.producao_orientacao
@@ -552,7 +552,7 @@ ALTER TABLE ONLY public.producao_orientacao
 
 --
 -- TOC entry 3496 (class 2606 OID 60771)
--- Name: programa_docente programa_docente_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: programa_docente programa_docente_fk; Type: FK CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.programa_docente
@@ -561,7 +561,7 @@ ALTER TABLE ONLY public.programa_docente
 
 --
 -- TOC entry 3497 (class 2606 OID 60776)
--- Name: programa_docente programa_docente_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: programa_docente programa_docente_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.programa_docente
@@ -570,7 +570,7 @@ ALTER TABLE ONLY public.programa_docente
 
 --
 -- TOC entry 3501 (class 2606 OID 60845)
--- Name: tecnica_orientacao tecnica_orientacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tecnica_orientacao tecnica_orientacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.tecnica_orientacao
@@ -579,7 +579,7 @@ ALTER TABLE ONLY public.tecnica_orientacao
 
 --
 -- TOC entry 3502 (class 2606 OID 60850)
--- Name: tecnica_orientacao tecnica_orientacao_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tecnica_orientacao tecnica_orientacao_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: jkmmzljt
 --
 
 ALTER TABLE ONLY public.tecnica_orientacao
@@ -589,13 +589,13 @@ ALTER TABLE ONLY public.tecnica_orientacao
 -- Completed on 2023-04-09 17:54:25 -03
 
 --
--- PostgreSQL database dump complete
+-- jkmmzljtQL database dump complete
 --
 
---spring.datasource.url=jdbc:postgresql://localhost:5433/dump
---spring.datasource.driverClassName=org.postgresql.Driver
---spring.datasource.username=postgres
+--spring.datasource.url=jdbc:jkmmzljtql://localhost:5433/dump
+--spring.datasource.driverClassName=org.jkmmzljtql.Driver
+--spring.datasource.username=jkmmzljt
 --spring.datasource.password=01ArieopaC
---spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+--spring.jpa.database-platform=org.hibernate.dialect.jkmmzljtQLDialect
 --spring.jpa.defer-datasource-initialization=true
 --spring.h2.console.enabled=true

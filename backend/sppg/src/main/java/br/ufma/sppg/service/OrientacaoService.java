@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.ufma.sppg.dto.OrientacaoNewProdDTO;
+import br.ufma.sppg.dto.OrientacaoProdDTO;
 import br.ufma.sppg.model.Docente;
 import br.ufma.sppg.model.Orientacao;
 import br.ufma.sppg.model.Producao;
@@ -38,32 +40,43 @@ public class OrientacaoService {
     @Autowired
     private TecnicaRepository tecnicaRepository;
 
-    // TODO: Validar entrada de dados
     public Optional<List<Orientacao>> obterOrientacoesComTecnicaPorPeriodo(Integer idDocente, Integer anoInicio,
             Integer anoFim) {
+        verificarData(anoInicio, anoFim);
+        verificarIdDocente(idDocente);
         return orientacaoRepository.obterOrientacoesComTecnicaPorPeriodo(idDocente, anoInicio, anoFim);
     }
 
-    // TODO: Validar entrada de dados
     public Optional<List<Orientacao>> obterOrientacoesComProducaoPorPeriodo(Integer idDocente, Integer anoInicio,
             Integer anoFim) {
+        verificarData(anoInicio, anoFim);
+        verificarIdDocente(idDocente);
         return orientacaoRepository.obterOrientacoesComProducaoPorPeriodo(idDocente, anoInicio, anoFim);
     }
 
-    // TODO: Validar o período informado
     public List<Orientacao> obterOrientacaoPPG(Integer id, Integer anoIni, Integer anoFim) {
-        validarPeriodo(anoIni, anoFim);
+        verificarData(anoIni, anoFim);
         validarOrientacoesPpg(id, anoIni, anoFim);
         List<Orientacao> orientacoes = orientacaoRepository.findByPPG(id, anoIni, anoFim).get();
 
         return orientacoes;
     }
 
-    // TODO: Validar o período informado
     public List<Orientacao> obterOrientacaoDocente(Integer id, Integer anoIni, Integer anoFim) {
-        validarPeriodo(anoIni, anoFim);
+        verificarData(anoIni, anoFim);
         validarOrientacoesDoc(id, anoIni, anoFim);
         List<Orientacao> orientacoes = orientacaoRepository.findByDocente(id, anoIni, anoFim).get();
+
+        return orientacoes;
+    }
+
+    @Transactional
+    public List<Orientacao> obterOrientacoesProd(List<Integer> ids, Integer idProd){
+        for(Integer id : ids){
+            verificarId(id);
+        }
+        verificarNumero(idProd);
+        List<Orientacao> orientacoes = orientacaoRepository.obterOrientacoesProd(ids, idProd).get();
 
         return orientacoes;
     }
@@ -110,9 +123,29 @@ public class OrientacaoService {
         return orientacaoRepository.save(orientacao);
     }
 
-    // TODO: Validar o período informado
-    private void validarOrientacoesPpg(Integer idPrograma, Integer anoIni, Integer anoFim) {
+    public List<OrientacaoNewProdDTO> obterOrientacoesNewProdDTO(){
+        List<OrientacaoNewProdDTO> orientacoes = orientacaoRepository.obterOrientacoesNewProdDTO().get();
 
+        return orientacoes;
+    }
+
+    public List<OrientacaoNewProdDTO> obterOrientacoesNewProdDTO(Integer idProd){
+        List<OrientacaoNewProdDTO> orientacoes = orientacaoRepository.obterOrientacoesNewProdDTO(idProd).get();
+
+        return orientacoes;
+    }
+
+    public List<OrientacaoNewProdDTO> obterOrientacoesNewTecnDTO(Integer idTecn){
+        List<OrientacaoNewProdDTO> orientacoes = orientacaoRepository.obterOrientacoesNewTecnDTO(idTecn).get();
+
+        return orientacoes;
+    }
+
+    public List<OrientacaoProdDTO> obterOrientacoesProdDTO(){
+        return orientacaoRepository.obterOrientacoesProdDTO().get();
+    }
+
+    private void validarOrientacoesPpg(Integer idPrograma, Integer anoIni, Integer anoFim) {
         Optional<Programa> programa = programaRepository.findById(idPrograma);
 
         Optional<List<Orientacao>> orientacoes = orientacaoRepository.findByPPG(idPrograma, anoIni, anoFim);
@@ -123,7 +156,6 @@ public class OrientacaoService {
             throw new RuntimeException("Não foram encontradas orientações para este docente.");
     }
 
-    // TODO: Validar o período informado
     private void validarOrientacoesDoc(Integer idDocente, Integer anoIni, Integer anoFim) {
 
         Optional<Docente> docente = docenteRepository.findById(idDocente);
@@ -160,9 +192,33 @@ public class OrientacaoService {
             throw new RuntimeException("Não foram existe orientação.");
     }
 
-    private void validarPeriodo(Integer anoInicio, Integer anoFim) {
-        if (anoInicio > anoFim) {
-            throw new ServicoRuntimeException("Ano inicial maior que ano fim.");
+    private void verificarId(Integer idOrientacao) {
+        verificarNumero(idOrientacao);
+        if (!orientacaoRepository.existsById(idOrientacao)) {
+            throw new ServicoRuntimeException("Id da orientacao não está registrado");
         }
     }
+
+    private void verificarIdDocente(Integer idDocente) {
+        verificarNumero(idDocente);
+        if (!docenteRepository.existsById(idDocente)) {
+            throw new ServicoRuntimeException("Id do docente não está registrado");
+        }
+    }
+
+    private void verificarData(Integer data1, Integer data2) {
+        verificarNumero(data1);
+        verificarNumero(data2);
+        if (data1 > data2) {
+            throw new ServicoRuntimeException("Data inical maior que a data final");
+        }
+    }
+
+    private void verificarNumero(Integer numero) {
+        if (numero == null) {
+            throw new ServicoRuntimeException("Número Inválido");
+        }
+
+    }
+
 }

@@ -1,16 +1,21 @@
 package br.ufma.sppg.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.ufma.sppg.dto.AtualizaProducaoDTO;
+import br.ufma.sppg.dto.NewProducaoDTO;
+import br.ufma.sppg.dto.ProducaoDTO;
 import br.ufma.sppg.model.Docente;
 import br.ufma.sppg.model.Orientacao;
 import br.ufma.sppg.model.Producao;
 import br.ufma.sppg.model.Programa;
+import br.ufma.sppg.model.Tecnica;
 import br.ufma.sppg.repo.DocenteRepository;
 import br.ufma.sppg.repo.OrientacaoRepository;
 import br.ufma.sppg.repo.ProducaoRepository;
@@ -82,15 +87,10 @@ public class ProducaoService {
 
     };
 
+    //TODO: atualizar função
     public List<Producao>obterProducoesDocente(Integer idDocente, Integer data1, Integer data2){
 
-        //É Presumido que o usuário coloque em data1 o valor mais baixo e em data2 o valor mais alto como por exemplo
-        //data1=2016, data2=2023. Esta função verifica se a ordem esperada foi trocada e ajusta para que não ocorra erros
-        if (data1 >= data2){
-            Integer data = data2;
-            data2 = data1;
-            data1 = data;
-        }
+        verificarData(data1, data2);
 
         Optional<Docente> docente = docRepo.findById(idDocente);
         if(docente.isPresent()){
@@ -115,24 +115,62 @@ public class ProducaoService {
         throw new ServicoRuntimeException("Docente Inexistente");
     }
 
+    public NewProducaoDTO obterProducao(Integer idProd){
+        verificarIdProducao(idProd);
+        List<Integer> docentes = prodRepo.obterDocentesId(idProd).get();
+        List<Integer> orientacoes = prodRepo.obterOrientacoesId(idProd).get();
 
-    
+        Producao prod = prodRepo.findById(idProd).get();
+
+        return new NewProducaoDTO(prod.getTitulo(), prod.getNomeLocal(), prod.getTipo(), prod.getQualis(), prod.getIssnOuSigla(), prod.getAno(), prod.getPercentileOuH5(), prod.getQtdGrad(), prod.getQtdMestrado(), prod.getQtdDoutorado(), docentes, orientacoes);
+
+    }
+
+    public List<ProducaoDTO> obterProducoesDTO(){
+        List<ProducaoDTO> producoesDTO = prodRepo.obterProducoesDTO().get();
+        // for(Producao prod : producoes){
+        //     String gmd = prod.getQtdGrad() + "G|" + prod.getQtdMestrado() + "M|" + prod.getQtdDoutorado() + "D";
+        //     String docente = "Indefinido";
+            
+        //     if(!(prod.getDocentes() == null)){
+        //         if(!prod.getDocentes().isEmpty()){
+        //             docente = prod.getDocentes().get(0).getNome();
+        //         }
+        //     }
+
+        //     ProducaoDTO dto;
+        //     if(prod.getOrientacoes() == null){
+        //         dto = new ProducaoDTO(prod.getId(), prod.getAno(), docente, prod.getTitulo(), prod.getNomeLocal(), "Não", gmd);
+        //         producoesDTO.add(dto);
+        //         continue;
+        //     }
+        //     if(prod.getOrientacoes().isEmpty()){
+        //         dto = new ProducaoDTO(prod.getId(), prod.getAno(), docente, prod.getTitulo(), prod.getNomeLocal(), "Não", gmd);
+        //     }else{
+        //         dto = new ProducaoDTO(prod.getId(), prod.getAno(), docente, prod.getTitulo(), prod.getNomeLocal(), "Sim", gmd);
+        //     }
+        //     producoesDTO.add(dto);
+        // }
+
+        return producoesDTO;
+    }
+
     private void verificarProducao(Producao producao){
         if(producao==null)
             throw new ServicoRuntimeException("Produção deve ser Informada");
-        if(producao.getTipo() == null || producao.getTipo() == "")
+        if(producao.getTipo() == null || producao.getTipo().equals(""))
             throw new ServicoRuntimeException("O tipo da Produção deve ser informado");
-        if(producao.getIssnOuSigla() == null || producao.getIssnOuSigla() == "")
+        if(producao.getIssnOuSigla() == null || producao.getIssnOuSigla().equals(""))
             throw new ServicoRuntimeException("A Issn/Sigla da Produção deve ser informada");
-        if(producao.getNomeLocal() == null || producao.getNomeLocal() == "")
+        if(producao.getNomeLocal() == null || producao.getNomeLocal().equals(""))
             throw new ServicoRuntimeException("O nome local da Produção deve ser informado");
-        if(producao.getTitulo() == null || producao.getTitulo() == "")
+        if(producao.getTitulo() == null || producao.getTitulo().equals(""))
             throw new ServicoRuntimeException("O titulo da Produção deve ser informado");
         if(producao.getAno() == null)
             throw new ServicoRuntimeException("O ano da Produção deve ser Informado");
         if(producao.getAno() < 0)
             throw new ServicoRuntimeException("Informe um ano válido para a Produção");
-        if(producao.getQualis() == null || producao.getQualis() == "")
+        if(producao.getQualis() == null || producao.getQualis().equals(""))
             throw new ServicoRuntimeException("A qualis da Produção deve ser informada");
         Float percentileOuH5 = producao.getPercentileOuH5();
         if(percentileOuH5 == null || percentileOuH5 < 0)
@@ -157,16 +195,104 @@ public class ProducaoService {
         return prodRepo.save(producao);
     }
 
+    @Transactional
+    public Producao setOrientacoes(List<Integer> orientacoesIds, Integer idProducao){
+        verificarIdProducao(idProducao);
+        Producao producao = prodRepo.findById(idProducao).get();
+        List<Orientacao> orientacoes = oriRepo.obterOrientacoesProd(orientacoesIds, idProducao).get();
+        producao.getOrientacoes().clear();
+        producao.getOrientacoes().addAll(orientacoes);
+        return prodRepo.save(producao);
+    }
 
     public List<Orientacao> obterOrientacaoProducao(Integer idProducao){
         Optional<Producao> producao = prodRepo.findById(idProducao);
         if(producao.isPresent()){
-            if(prodRepo.getReferenceById(idProducao).getOrientacoes() != null)
+            if(prodRepo.getReferenceById(idProducao).getOrientacoes() != null){
                 return prodRepo.getReferenceById(idProducao).getOrientacoes();
+            }
+            return new ArrayList<>();
         }
         throw new ServicoRuntimeException("A Producao não existe");
     }
-/*
+
+    @Transactional
+    public Producao addEstatisticasProd(Integer qtdGrad, Integer qtdMestrado, Integer qtdDoutorado, Integer idProducao){
+        verificarIdProducao(idProducao);
+        Producao prod = prodRepo.findById(idProducao).get();
+        Integer grad = prod.getQtdGrad() + qtdGrad;
+        Integer mest = prod.getQtdMestrado() + qtdMestrado;
+        Integer dout = prod.getQtdDoutorado() + qtdDoutorado;
+        prod.setQtdGrad(grad);
+        prod.setQtdMestrado(mest);
+        prod.setQtdDoutorado(dout);
+        return prodRepo.save(prod);
+    }
+
+    @Transactional
+    public Producao addProd(NewProducaoDTO newProdDTO){
+        Producao prod = Producao.builder().titulo(newProdDTO.getTitulo()).nomeLocal(newProdDTO.getNomeLocal())
+                                        .tipo(newProdDTO.getTipo()).qualis(newProdDTO.getQualis()).issnOuSigla(newProdDTO.getIssnSigla())
+                                        .ano(newProdDTO.getAno()).percentileOuH5(newProdDTO.getPercentilouh5())
+                                        .qtdGrad(newProdDTO.getQtdGrad()).qtdMestrado(newProdDTO.getQtdMestrado())
+                                        .qtdDoutorado(newProdDTO.getQtdDoutorado()).build();
+        verificarProducao(prod);
+        Optional<List<Docente>> docentes = docRepo.obterDocentes(newProdDTO.getIdDocentes());
+        Optional<List<Orientacao>> orientacoes = oriRepo.obterOrientacoes(newProdDTO.getIdOrientacoes());
+        if(docentes.isPresent()){
+            prod.setDocentes(docentes.get());
+        }
+        if(orientacoes.isPresent()){
+            prod.setOrientacoes(orientacoes.get());
+        }
+
+        return prodRepo.save(prod);
+    }
+
+    @Transactional
+    public Producao atualizarProd(AtualizaProducaoDTO newProdDTO){
+        Producao prod = Producao.builder().id(newProdDTO.getId()).titulo(newProdDTO.getTitulo()).nomeLocal(newProdDTO.getNomeLocal())
+                                        .tipo(newProdDTO.getTipo()).qualis(newProdDTO.getQualis()).issnOuSigla(newProdDTO.getIssnSigla())
+                                        .ano(newProdDTO.getAno()).percentileOuH5(newProdDTO.getPercentilouh5())
+                                        .qtdGrad(newProdDTO.getQtdGrad()).qtdMestrado(newProdDTO.getQtdMestrado())
+                                        .qtdDoutorado(newProdDTO.getQtdDoutorado()).build();
+        verificarProducao(prod);
+        Optional<List<Docente>> docentes = docRepo.obterDocentes(newProdDTO.getIdDocentes());
+        Optional<List<Orientacao>> orientacoes = oriRepo.obterOrientacoes(newProdDTO.getIdOrientacoes());
+        if(docentes.isPresent()){
+            prod.setDocentes(docentes.get());
+        }
+        if(orientacoes.isPresent()){
+            prod.setOrientacoes(orientacoes.get());
+        }
+
+        return prodRepo.save(prod);
+    }
+    
+    private void verificarIdProducao(Integer idProducao) {
+        verificarNumero(idProducao);
+        if (!prodRepo.existsById(idProducao)) {
+            throw new ServicoRuntimeException("Id da produção não está registrado");
+        }
+    }
+
+    private void verificarData(Integer data1, Integer data2) {
+        verificarNumero(data1);
+        verificarNumero(data2);
+        if (data1 > data2) {
+            throw new ServicoRuntimeException("Data inical maior que a data final");
+        }
+    }
+
+    private void verificarNumero(Integer numero) {
+        if (numero == null) {
+            throw new ServicoRuntimeException("Número Inválido");
+        }
+
+    }
+
+
+    /*
     public boolean excluirProducao(Integer idProducao){
         Optional<Producao> producao = prodRepo.findById(idProducao);
         if(producao.isPresent()){

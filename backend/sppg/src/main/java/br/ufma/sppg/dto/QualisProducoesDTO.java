@@ -5,9 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class DocenteQualisDTO {
-    Integer id;
-    String nome;
+public class QualisProducoesDTO {
     Integer a1;
     Integer a2;
     Integer a3;
